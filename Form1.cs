@@ -47,7 +47,7 @@ namespace DS2_Character_Planner
         {
             if (!string.IsNullOrEmpty(tb3.Text))
             {
-                if (Int32.Parse(tb3.Text) < Int32.Parse(tb1.Text) || Int32.Parse(tb3.Text) > Int32.Parse(tb1.Text))
+                if (Int32.Parse(tb3.Text) - 1 < Int32.Parse(tb1.Text) || Int32.Parse(tb3.Text) > Int32.Parse(tb1.Text))
                 {
                     
                     List<Stats> holder = new List<Stats>();
@@ -297,7 +297,7 @@ namespace DS2_Character_Planner
             foreach (Stats stat in listat)
             {
                 int current = Int32.Parse(stat.SoulLevelNew);
-                if (current < compare)
+                if (current < compare && Int32.Parse(stat.SoulLevelNew) < Int32.Parse(listat[lowest].SoulLevelNew))
                 {
                     lowest = listat.IndexOf(stat);
                 }
@@ -305,7 +305,7 @@ namespace DS2_Character_Planner
             if (selected != lowest)
             {
                 int diff = Int32.Parse(listat[selected].SoulLevelNew) - Int32.Parse(listat[lowest].SoulLevelNew);
-                DialogResult res = MessageBox.Show(classes[lowest] + " has a lower soul level (" + listat[lowest] + ") by " + diff + ".\r\nSelect " + classes[lowest] + "instead?",
+                DialogResult res = MessageBox.Show(classes[lowest] + " has a lower soul level (" + listat[lowest] + ") by " + diff + ".\r\nSelect " + classes[lowest] + " instead?",
                     classes[lowest] + " Suggested!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (res == DialogResult.Yes)
                 {
@@ -386,6 +386,8 @@ namespace DS2_Character_Planner
             List<XElement> baselist = xml.Elements().ToList();
             List<XElement> holder = new List<XElement>();
 
+            listat.Clear();
+
             foreach (XElement ele in baselist)
             {
                 holder = ele.Elements().ToList();
@@ -424,6 +426,44 @@ namespace DS2_Character_Planner
                 stat.FaithDiff = "0";
 
                 listat.Add(stat);
+            }
+
+            if (comClass.SelectedIndex > 0)
+            {
+                int index = comClass.SelectedIndex - 1;
+
+                sl1.Text = listat[index].SoulLevelBase;
+                vig1.Text = listat[index].VigorBase;
+                end1.Text = listat[index].EnduranceBase;
+                vit1.Text = listat[index].VitalityBase;
+                att1.Text = listat[index].AttunementBase;
+                str1.Text = listat[index].StrengthBase;
+                dex1.Text = listat[index].DexterityBase;
+                ada1.Text = listat[index].AdaptabilityBase;
+                int1.Text = listat[index].IntelligenceBase;
+                fai1.Text = listat[index].FaithBase;
+
+                sl2.Text = listat[index].SoulLevelDiff;
+                vig2.Text = listat[index].VigorDiff;
+                end2.Text = listat[index].EnduranceDiff;
+                vit2.Text = listat[index].VitalityDiff;
+                att2.Text = listat[index].AttunementDiff;
+                str2.Text = listat[index].StrengthDiff;
+                dex2.Text = listat[index].DexterityDiff;
+                ada2.Text = listat[index].AdaptabilityDiff;
+                int2.Text = listat[index].IntelligenceDiff;
+                fai2.Text = listat[index].FaithDiff;
+
+                sl3.Text = listat[index].SoulLevelNew;
+                vig3.Text = listat[index].VigorNew;
+                end3.Text = listat[index].EnduranceNew;
+                vit3.Text = listat[index].VitalityNew;
+                att3.Text = listat[index].AttunementNew;
+                str3.Text = listat[index].StrengthNew;
+                dex3.Text = listat[index].DexterityNew;
+                ada3.Text = listat[index].AdaptabilityNew;
+                int3.Text = listat[index].IntelligenceNew;
+                fai3.Text = listat[index].FaithNew;
             }
         }
 
